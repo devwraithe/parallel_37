@@ -4,7 +4,7 @@ Parallel 37 is a mock food ordering application for ordering Pizzas. It was buil
 
 ## :camera: Preview
 
-<p>Visit <b><a href="https://vimeo.com/752370794">this link</a></b> to see the application in action</p>
+<p>Visit <b><a href="https://vimeo.com/752607818">this link</a></b> to see the application in action</p>
 <div style="display: flex;">
     <img src="assets/shots/1.png" width="250" />
     <img src="assets/shots/2.png" width="250" />
