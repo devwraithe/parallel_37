@@ -3,7 +3,11 @@
 Parallel 37 is an application for ordering foods from different restaureants. Based on the design, each restaurant has a list of menu that the user can order from and an order can't be added to the cart twice (more updates coming). It was built using Dart and Flutter with with focus on handling states using RiverPod, this project is an improvement to the previous version which allows users to add just 3 kinds of pizzas. This project fetches data from local JSON files and uses <a href="https://pub.dev/packages/sqflite">SQFLite (SQLite Plugin for Flutter)</a> to store products added to the cart locally on your device, that way you can still have access to items in your cart even after closing the app (unless you choose to remove the item).
 
 ## :camera: Preview
-![https://drive.google.com/file/d/1vFVw0gnuCysld_m_zgZxdKTFTiifoWkz/view?usp=sharing](https://img.shields.io/badge/Download_for_Android-1cab60?style=for-the-badge&logo=android&logoColor=white)
+<!-- ![https://drive.google.com/file/d/1vFVw0gnuCysld_m_zgZxdKTFTiifoWkz/view?usp=sharing](https://img.shields.io/badge/Download_for_Android-1cab60?style=for-the-badge&logo=android&logoColor=white) -->
+<a href="https://drive.google.com/file/d/1vFVw0gnuCysld_m_zgZxdKTFTiifoWkz/view?usp=sharing">
+    <img src="https://medex.com.bd/img/download_for_android_icon.png", width="186" height="60"/>
+</a>
+<br/><br/>
 <div style="display: flex;">
     <img src="assets/shots/a.png" width="250" />
     <img src="assets/shots/b.png" width="250" />
