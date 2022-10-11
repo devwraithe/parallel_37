@@ -4,14 +4,13 @@ Parallel 37 is an application for ordering foods from different restaureants. Ba
 
 ## :camera: Preview
 
-<p>Visit <b><a href="https://vimeo.com/752607818">this link</a></b> to see the application in action</p>
 <div style="display: flex;">
-    <img src="assets/shots/1.png" width="250" />
-    <img src="assets/shots/2.png" width="250" />
-    <img src="assets/shots/3.png" width="250" />
-    <img src="assets/shots/4.png" width="250" />
-    <img src="assets/shots/5.png" width="250" />
-    <img src="assets/shots/6.png" width="250" />
+    <img src="assets/shots/a.png" width="250" />
+    <img src="assets/shots/b.png" width="250" />
+    <img src="assets/shots/c.png" width="250" />
+    <img src="assets/shots/d.png" width="250" />
+    <img src="assets/shots/e.png" width="250" />
+    <img src="assets/shots/f.png" width="250" />
 </div>
 
 ## :clipboard: Requirements
