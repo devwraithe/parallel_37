@@ -21,7 +21,6 @@ dependencies:
   dartz: ^0.10.1
   http: ^0.13.5
   cached_network_image: ^3.2.2
-  expandable_bottom_sheet: ^1.1.1+1
   shimmer: ^2.0.0
 
 dev_dependencies:

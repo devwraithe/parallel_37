@@ -1,6 +1,6 @@
 # Parallel 37 - Food Ordering Application (Mock)
 
-Parallel 37 is a mock food ordering application for ordering Pizzas. It was built using Dart and Flutter with with sole focus on handling states using RiverPod and StateNotifier hence the core feature which enables users to add Pizzas to cart. This project fetches data from a manually written array of models but it's using <a href="https://pub.dev/packages/sqflite">SQFLite (SQLite Plugin for Flutter)</a> under the hood to store items added to the cart locally on your device, that way you can still have access to items in your cart even after closing the app (unless you choose to remove it).
+Parallel 37 is an application for ordering foods from different restaureants. Based on the design, each restaurant has a list of menu that the user can order from and an order can't be added to the cart twice (more updates coming). It was built using Dart and Flutter with with focus on handling states using RiverPod, this project is an improvement to the previous version which allows users to add just 3 kinds of pizzas. This project fetches data from local JSON files and uses <a href="https://pub.dev/packages/sqflite">SQFLite (SQLite Plugin for Flutter)</a> to store products added to the cart locally on your device, that way you can still have access to items in your cart even after closing the app (unless you choose to remove the item).
 
 ## :camera: Preview
 
@@ -10,6 +10,8 @@ Parallel 37 is a mock food ordering application for ordering Pizzas. It was buil
     <img src="assets/shots/2.png" width="250" />
     <img src="assets/shots/3.png" width="250" />
     <img src="assets/shots/4.png" width="250" />
+    <img src="assets/shots/5.png" width="250" />
+    <img src="assets/shots/6.png" width="250" />
 </div>
 
 ## :clipboard: Requirements
@@ -23,10 +25,15 @@ Parallel 37 is a mock food ordering application for ordering Pizzas. It was buil
 
 ## :pushpin: Dependencies
 
-- flutter_svg: ^1.1.5
-- path_provider: ^2.0.10
-- sqflite: ^2.0.2+1
-- flutter_riverpod: ^1.0.4
+- flutter_svg: ^1.1.5 (Load SVG Files)
+- path_provider: ^2.0.10 (Find common locations on the filesystem)
+- sqflite: ^2.0.2+1 (SQLite plugin for Flutter)
+- flutter_riverpod: ^1.0.4 (Managing states)
+- equatable: ^2.0.5 (Easily compare instances of the same objects)
+- dartz: ^0.10.1 (Handling errors)
+- http: ^0.13.5 (Making network requests)
+- cached_network_image: ^3.2.2 (Keep loaded image in cache)
+  shimmer: ^2.0.0 (Implement shimmer loading)
 
 ## :rocket: Getting Started
 
