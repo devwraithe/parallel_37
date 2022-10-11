@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 
-TextTheme theme() {
-  return const TextTheme(
+ThemeData themeData = ThemeData(
+  fontFamily: "Gilroy",
+  visualDensity: VisualDensity.comfortable,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.black,
+      elevation: 0,
+      minimumSize: const Size(
+        double.infinity,
+        62,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          60,
+        ),
+      ),
+    ),
+  ),
+  textTheme: const TextTheme(
     headline1: TextStyle(
       fontSize: 41.05,
       fontWeight: FontWeight.w900,
@@ -31,19 +48,19 @@ TextTheme theme() {
     ),
     headline6: TextStyle(
       fontSize: 22.78,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w800,
       color: Colors.black,
       height: 1.4,
     ),
     subtitle1: TextStyle(
       fontSize: 20.25,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
     subtitle2: TextStyle(
       fontSize: 18.00,
-      fontWeight: FontWeight.w600,
-      color: Colors.grey,
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
     ),
     bodyText1: TextStyle(
       fontSize: 16.00,
@@ -65,5 +82,5 @@ TextTheme theme() {
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
-  );
-}
+  ),
+);

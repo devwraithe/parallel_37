@@ -1,13 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:parallel_37/src/data/pizza_model.dart';
-import 'package:parallel_37/src/presentation/logic/cart_viewmodel.dart';
-import 'package:parallel_37/src/presentation/views/info.dart';
-import 'package:parallel_37/src/presentation/widgets/card.dart';
-import "../../config/routes.dart" as routes;
+import 'package:parallel_37/src/presentation/view_models/providers/stores_provider.dart';
+import 'package:parallel_37/src/presentation/views/shopping_bag.dart';
+import 'package:parallel_37/src/presentation/views/store_details.dart';
+import 'package:parallel_37/src/presentation/widgets/horizontal_scroll.dart';
+import 'package:parallel_37/src/presentation/widgets/item_card.dart';
+import 'package:parallel_37/src/presentation/widgets/search_field.dart';
+import 'package:parallel_37/src/presentation/widgets/section_title.dart';
+import 'package:parallel_37/src/presentation/widgets/shimmers/store_card_shimmer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,341 +19,202 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
+    final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
-      body: SafeArea(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size(screenSize.width, 144),
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome, Mr Wick",
-                textAlign: TextAlign.center,
-                style: textTheme.headline3,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                "Get your tasty Pizzas from us!",
-                textAlign: TextAlign.center,
-                style: textTheme.subtitle2,
-              ),
-              const SizedBox(height: 38),
-              Expanded(
-                child: PageView.builder(
-                  onPageChanged: (current) {
-                    setState(() {
-                      _selectedIndex = current;
-                    });
-                  },
-                  scrollDirection: Axis.horizontal,
-                  controller: _pageController,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: PizzaModel.pizzaList.length,
-                  itemBuilder: (context, index) {
-                    var scale = _selectedIndex == index ? 1.0 : 0.88;
-                    return TweenAnimationBuilder(
-                      tween: Tween(
-                        begin: scale,
-                        end: scale,
-                      ),
-                      curve: Curves.decelerate,
-                      duration: const Duration(
-                        milliseconds: 350,
-                      ),
-                      builder: (context, value, child) {
-                        final pizza = PizzaModel.pizzaList[index];
-                        return Transform.scale(
-                          scale: value,
-                          child: CustomCard(
-                            image: pizza.image,
-                            name: pizza.name,
-                            duration: pizza.duration,
-                            tags: pizza.tags,
-                            weight: pizza.weight,
-                            price: pizza.price.toString(),
-                            action: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Info(
-                                  pizzaData: pizza,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 42),
-              Consumer(
-                builder: (context, ref, child) {
-                  final cartNotifier = ref.watch(cartProvider);
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(
-                        context,
-                        routes.bag,
-                      ),
-                      child: Text(
-                        "${cartNotifier.length.toString()} Items in Pizza Cart",
-                        style: textTheme.bodyText1?.copyWith(
-                          letterSpacing: 0.4,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  );
-                },
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                spreadRadius: 1,
+                blurRadius: 10,
               ),
             ],
           ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You're at ",
+                        style: textTheme.subtitle2?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        "The Hokage's Office, ",
+                        style: textTheme.subtitle2?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        "Konoha",
+                        style: textTheme.subtitle2?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Flexible(
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.grey.withOpacity(0.4),
+                      //       borderRadius: BorderRadius.circular(100),
+                      //     ),
+                      //     padding: const EdgeInsets.all(10),
+                      //     child: SvgPicture.asset(
+                      //       "assets/icons/save.svg",
+                      //       color: Colors.grey,
+                      //     ),
+                      //   ),
+                      // ),
+                      const Expanded(
+                        flex: 6,
+                        child: SearchField(),
+                      ),
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Bag(),
+                            ),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 48, 48, 48),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              "assets/icons/shopping-bag.svg",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Consumer(
+          builder: (context, ref, child) {
+            final stores = ref.watch(storesProvider);
+            final popularStores = ref.watch(popularStoresProvider);
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 32),
+                stores.when(
+                  data: (stores) {
+                    return Column(
+                      children: [
+                        const SectionTitle(title: "Stores you might like"),
+                        HorizontalScroll(
+                          itemCount: stores.length,
+                          items: (context, index) {
+                            final store = stores[index];
+                            return ItemCard(
+                              image: store.image!,
+                              title: store.name!,
+                              chip: store.storeType!,
+                              attachment: "${store.delivery} Delivery",
+                              action: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StoreDetails(
+                                    storeData: store,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    );
+                  },
+                  error: (error, s) => const Center(
+                    child: Text("An Unknown Error Occured!"),
+                  ),
+                  loading: () => Column(
+                    children: const [
+                      StoreCardShimmer(itemCount: 6),
+                      SizedBox(height: 18),
+                      StoreCardShimmer(itemCount: 6),
+                      SizedBox(height: 18),
+                      StoreCardShimmer(itemCount: 6),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 6),
+                popularStores.when(
+                  data: (popularStores) {
+                    return Column(
+                      children: [
+                        const SectionTitle(title: "Popular in San Francisco"),
+                        HorizontalScroll(
+                          itemCount: popularStores.length,
+                          items: (context, index) {
+                            final store = popularStores[index];
+                            return ItemCard(
+                              image: store.image!,
+                              title: store.name!,
+                              chip: store.storeType!,
+                              attachment: "${store.delivery} Delivery",
+                              action: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StoreDetails(
+                                    storeData: store,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    );
+                  },
+                  error: (error, s) => const Center(
+                    child: Text("An Unknown Error Occured!"),
+                  ),
+                  loading: () => Column(
+                    children: const [
+                      StoreCardShimmer(itemCount: 6),
+                      SizedBox(height: 18),
+                      StoreCardShimmer(itemCount: 6),
+                      SizedBox(height: 18),
+                      StoreCardShimmer(itemCount: 6),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
-
-  late PageController _pageController;
-  int _selectedIndex = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(
-      initialPage: 1,
-      viewportFraction: 0.74,
-    );
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 }
-
-// Counter Class
-class Counter {
-  int value = 0;
-
-  void increment() => value++;
-  void decrement() => value--;
-}
-
-// import 'package:badges/badges.dart';
-// import 'package:flutter/material.dart';
-// import 'package:parallel_37/src/data/cart_model.dart';
-// import 'package:parallel_37/src/data/db_helper.dart';
-// import 'package:parallel_37/src/data/item_model.dart';
-// import 'package:parallel_37/src/presentation/logic/cart_provider.dart';
-// import 'package:parallel_37/src/presentation/views/cart.dart';
-// import 'package:provider/provider.dart';
-
-// class Home extends StatefulWidget {
-//   const Home({Key? key}) : super(key: key);
-//   @override
-//   State<Home> createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> {
-//   List<Item> products = [
-//     Item(
-//         name: 'Apple', unit: 'Kg', price: 20, image: 'assets/images/apple.png'),
-//     Item(
-//         name: 'Mango',
-//         unit: 'Doz',
-//         price: 30,
-//         image: 'assets/images/mango.png'),
-//     Item(
-//         name: 'Banana',
-//         unit: 'Doz',
-//         price: 10,
-//         image: 'assets/images/banana.png'),
-//     Item(
-//         name: 'Grapes',
-//         unit: 'Kg',
-//         price: 8,
-//         image: 'assets/images/grapes.png'),
-//     Item(
-//         name: 'Water Melon',
-//         unit: 'Kg',
-//         price: 25,
-//         image: 'assets/images/watermelon.png'),
-//     Item(name: 'Kiwi', unit: 'Pc', price: 40, image: 'assets/images/kiwi.png'),
-//     Item(
-//         name: 'Orange',
-//         unit: 'Doz',
-//         price: 15,
-//         image: 'assets/images/orange.png'),
-//     Item(name: 'Peach', unit: 'Pc', price: 8, image: 'assets/images/peach.png'),
-//     Item(
-//         name: 'Strawberry',
-//         unit: 'Box',
-//         price: 12,
-//         image: 'assets/images/strawberry.png'),
-//     Item(
-//         name: 'Fruit Basket',
-//         unit: 'Kg',
-//         price: 55,
-//         image: 'assets/images/fruitBasket.png'),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     DBHelper dbHelper = DBHelper();
-
-//     final cart = Provider.of<CartProvider>(context);
-//     void saveData(int index) {
-//       dbHelper
-//           .insert(
-//         Cart(
-//           id: index,
-//           productId: index.toString(),
-//           productName: products[index].name,
-//           initialPrice: products[index].price,
-//           productPrice: products[index].price,
-//           quantity: ValueNotifier(1),
-//           unitTag: products[index].unit,
-//           image: products[index].image,
-//         ),
-//       )
-//           .then((value) {
-//         cart.addTotalPrice(products[index].price.toDouble());
-//         cart.addCounter();
-//         print('Product Added to cart');
-//       }).onError((error, stackTrace) {
-//         print(error.toString());
-//       });
-//     }
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: const Text('Product List'),
-//         actions: [
-//           Badge(
-//             badgeContent: Consumer<CartProvider>(
-//               builder: (context, value, child) {
-//                 return Text(
-//                   value.getCounter().toString(),
-//                   style: const TextStyle(
-//                       color: Colors.white, fontWeight: FontWeight.bold),
-//                 );
-//               },
-//             ),
-//             position: const BadgePosition(start: 30, bottom: 30),
-//             child: IconButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                         builder: (context) => const CartScreen()));
-//               },
-//               icon: const Icon(Icons.shopping_cart),
-//             ),
-//           ),
-//           const SizedBox(
-//             width: 20.0,
-//           ),
-//         ],
-//       ),
-//       body: ListView.builder(
-//         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-//         shrinkWrap: true,
-//         itemCount: products.length,
-//         itemBuilder: (context, index) {
-//           return Card(
-//             color: Colors.blueGrey.shade200,
-//             elevation: 5.0,
-//             child: Padding(
-//               padding: const EdgeInsets.all(4.0),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                 mainAxisSize: MainAxisSize.max,
-//                 children: [
-//                   Image(
-//                     height: 80,
-//                     width: 80,
-//                     image: AssetImage(products[index].image.toString()),
-//                   ),
-//                   SizedBox(
-//                     width: 130,
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         const SizedBox(
-//                           height: 5.0,
-//                         ),
-//                         RichText(
-//                           overflow: TextOverflow.ellipsis,
-//                           maxLines: 1,
-//                           text: TextSpan(
-//                               text: 'Name: ',
-//                               style: TextStyle(
-//                                   color: Colors.blueGrey.shade800,
-//                                   fontSize: 16.0),
-//                               children: [
-//                                 TextSpan(
-//                                     text:
-//                                         '${products[index].name.toString()}\n',
-//                                     style: const TextStyle(
-//                                         fontWeight: FontWeight.bold)),
-//                               ]),
-//                         ),
-//                         RichText(
-//                           maxLines: 1,
-//                           text: TextSpan(
-//                               text: 'Unit: ',
-//                               style: TextStyle(
-//                                   color: Colors.blueGrey.shade800,
-//                                   fontSize: 16.0),
-//                               children: [
-//                                 TextSpan(
-//                                     text:
-//                                         '${products[index].unit.toString()}\n',
-//                                     style: const TextStyle(
-//                                         fontWeight: FontWeight.bold)),
-//                               ]),
-//                         ),
-//                         RichText(
-//                           maxLines: 1,
-//                           text: TextSpan(
-//                               text: 'Price: ' r"$",
-//                               style: TextStyle(
-//                                   color: Colors.blueGrey.shade800,
-//                                   fontSize: 16.0),
-//                               children: [
-//                                 TextSpan(
-//                                     text:
-//                                         '${products[index].price.toString()}\n',
-//                                     style: const TextStyle(
-//                                         fontWeight: FontWeight.bold)),
-//                               ]),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                       style: ElevatedButton.styleFrom(
-//                           backgroundColor: Colors.blueGrey.shade900),
-//                       onPressed: () {
-//                         saveData(index);
-//                       },
-//                       child: const Text('Add to Cart')),
-//                 ],
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

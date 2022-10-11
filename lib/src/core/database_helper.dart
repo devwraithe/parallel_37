@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:parallel_37/src/data/cart_model.dart';
+import 'package:parallel_37/src/data/models/cart_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -21,14 +19,14 @@ class DatabaseHelper {
   createDatabase() async {
     io.Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, "cart.db");
+    // deleteDatabase(path);
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
 
-  // create database table
   _onCreate(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE cart (id INTEGAR PRIMARY KEY, name VARCHAR, image VARCHAR, price DOUBLE)',
+      'CREATE TABLE cart (id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, name VARCHAR, image VARCHAR, price DOUBLE,  publisher_id INTEGER)',
     );
   }
 
@@ -43,7 +41,7 @@ class DatabaseHelper {
     return cart;
   }
 
-  // get all db items
+  // === get all db items === //
   Future<List<Cart>> getCartList() async {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
@@ -53,12 +51,12 @@ class DatabaseHelper {
     return queryResultMap;
   }
 
-  // delete item from cart
+  // === delete item from cart === //
   Future<int> deleteCartItem(int id) async {
     var dbClient = await database;
     return await dbClient!.delete(
       "cart",
-      where: "id = ?",
+      where: "rowid = ?",
       whereArgs: [id],
     );
   }
