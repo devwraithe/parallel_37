@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parallel_37/app/core/routes/routes.dart';
 import 'package:parallel_37/app/core/theme/text_theme.dart';
 import 'package:parallel_37/app/core/utilities/helpers/validator_helpers.dart';
 import 'package:parallel_37/app/presentation/notifiers/auth_notifiers/create_acct_notifier.dart';
@@ -112,9 +113,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       "Already have a BiteHub account? ",
                       style: textTheme.bodyLarge,
                     ),
-                    Text(
-                      "Sign In",
-                      style: textTheme.titleLarge,
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        Routes.signIn,
+                      ),
+                      child: Text(
+                        "Sign In",
+                        style: textTheme.titleLarge,
+                      ),
                     ),
                   ],
                 ),

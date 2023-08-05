@@ -29,7 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
       } else if (e.code == 'invalid-email') {
         throw AuthException("You provided an invalid email address");
       }
-    } on ConnectionException catch (e) {
+    } on SocketException catch (e) {
       throw ConnectionException(Constants.socketError);
     } catch (e) {
       throw AuthException(Constants.unknownError);
@@ -54,10 +54,8 @@ class AuthRepositoryImpl implements AuthRepository {
         throw AuthException("You provided an invalid email address");
       }
     } on SocketException catch (e) {
-      debugPrint("SocketException: $e");
       throw ConnectionException(Constants.socketError);
     } catch (e) {
-      debugPrint("Error logging in: $e");
       throw AuthException(Constants.unknownError);
     }
   }
