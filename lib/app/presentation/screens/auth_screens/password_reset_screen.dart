@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parallel_37/app/presentation/notifiers/auth_notifiers/login_notifier.dart';
+import 'package:parallel_37/app/presentation/notifiers/auth_notifiers/password_reset_notifier.dart';
 
 import '../../../core/routes/routes.dart';
 import '../../../core/theme/text_theme.dart';
@@ -8,30 +8,29 @@ import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
 import '../../../core/utilities/helpers/validator_helpers.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class PasswordResetScreen extends StatefulWidget {
+  const PasswordResetScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<PasswordResetScreen> createState() => _PasswordResetScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final key = GlobalKey<FormState>(debugLabel: 'login');
+class _PasswordResetScreenState extends State<PasswordResetScreen> {
+  final key = GlobalKey<FormState>(debugLabel: 'password-reset');
 
   final Map<String, dynamic> data = {
     "email": "",
-    "password": "",
   };
 
-  _submit(context, LoginNotifier notifier) async {
+  _submit(context, PasswordResetNotifier notifier) async {
     final formState = key.currentState!;
 
     if (formState.validate()) {
       formState.save();
-      final result = await notifier.handleLogin(data);
-      if (result == LoginState.success) {
+      final result = await notifier.handleReset(data);
+      if (result == PasswordResetState.success) {
         // navigate to home
-      } else if (result == LoginState.failed) {
+      } else if (result == PasswordResetState.failed) {
         UiHelpers.errorFlush(
           notifier.error!,
           context,
@@ -59,12 +58,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 const SizedBox(height: 50),
                 Text(
-                  "Sign in",
+                  "Forgot Password",
                   style: textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 8.2),
                 Text(
-                  "Use your BiteHub sign-in",
+                  "One time password recovery",
                   style: textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 26),
@@ -79,40 +78,17 @@ class _SignInScreenState extends State<SignInScreen> {
                   validator: (v) => ValidatorHelper.email(v),
                   style: textTheme.bodyLarge,
                 ),
-                const SizedBox(height: 14),
-                TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    prefix: Constants.prefixSpace,
-                  ),
-                  autovalidateMode: Constants.validateMode,
-                  onSaved: (v) => data['password'] = v,
-                  validator: (v) => ValidatorHelper.password(v),
-                  style: textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    Routes.passwordReset,
-                  ),
-                  child: Text(
-                    "Forgot password?",
-                    style: textTheme.bodyLarge,
-                  ),
-                ),
                 const SizedBox(height: 20),
                 Consumer(
                   builder: (context, ref, _) {
-                    final state = ref.watch(loginProvider);
-                    final notifier = ref.read(loginProvider.notifier);
+                    final state = ref.watch(passwordResetProvider);
+                    final notifier = ref.read(passwordResetProvider.notifier);
 
                     return FilledButton(
                       onPressed: () => _submit(context, notifier),
-                      child: state == LoginState.loading
+                      child: state == PasswordResetState.loading
                           ? UiHelpers.loader()
-                          : const Text("Sign In"),
+                          : const Text("Reset"),
                     );
                   },
                 ),
@@ -121,16 +97,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have a BiteHub account? ",
+                      "Changed your mind? ",
                       style: textTheme.bodyLarge,
                     ),
                     GestureDetector(
                       onTap: () => Navigator.pushNamed(
                         context,
-                        Routes.signUp,
+                        Routes.signIn,
                       ),
                       child: Text(
-                        "Create account",
+                        "Sign In",
                         style: textTheme.titleLarge,
                       ),
                     ),
