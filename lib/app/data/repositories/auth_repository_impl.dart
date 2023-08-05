@@ -61,7 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> resetPassword(Map<String, dynamic> data) async {
+  Future<void> passwordReset(Map<String, dynamic> data) async {
     try {
       await _auth.sendPasswordResetEmail(email: data['email']);
     } on FirebaseAuthException catch (e) {
