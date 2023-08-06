@@ -30,7 +30,10 @@ class _SignInScreenState extends State<SignInScreen> {
       formState.save();
       final result = await notifier.handleLogin(data);
       if (result == LoginState.success) {
-        // navigate to home
+        Navigator.pushNamed(
+          context,
+          Routes.vendorHome,
+        );
       } else if (result == LoginState.failed) {
         UiHelpers.errorFlush(
           notifier.error!,
