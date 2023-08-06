@@ -38,4 +38,33 @@ class ValidatorHelper {
     }
     return null;
   }
+
+  // store validation
+  static String? storeName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Store name is required';
+    }
+    return null;
+  }
+
+  static String? storeEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Store email is required';
+    }
+    return null;
+  }
+
+  static String? storePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Store phone is required';
+    }
+    return null;
+  }
+
+  static String? storeLocation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Store location is required';
+    }
+    return null;
+  }
 }
