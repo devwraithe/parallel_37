@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parallel_37/app/core/theme/text_theme.dart';
 import 'package:parallel_37/app/core/utilities/helpers/validator_helpers.dart';
 
+import '../../../core/routes/routes.dart';
 import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
 import '../../notifiers/store_notifiers/create_store_notifier.dart';
 
 class CreateStoreScreen extends StatefulWidget {
   const CreateStoreScreen({super.key});
-
   @override
   State<CreateStoreScreen> createState() => _CreateStoreScreenState();
 }
@@ -31,7 +31,7 @@ class _CreateStoreScreenState extends State<CreateStoreScreen> {
       formState.save();
       final result = await notifier.createStore(data);
       if (result == CreateStoreState.success) {
-        // navigate to home
+        Navigator.pushNamed(context, Routes.createMenu);
       } else if (result == CreateStoreState.failed) {
         UiHelpers.errorFlush(
           notifier.error!,
