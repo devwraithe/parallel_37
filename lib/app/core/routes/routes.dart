@@ -7,4 +7,5 @@ class Routes {
   // vendor routes
   static String vendorHome = "/vendor_home";
   static String createStore = "/create_store";
+  static String createMenu = "/create_menu";
 }
