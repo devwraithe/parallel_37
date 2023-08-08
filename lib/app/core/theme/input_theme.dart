@@ -8,6 +8,7 @@ class AppInputDecorationTheme {
   static final inputDecoration = InputDecorationTheme(
     hintStyle: AppTextTheme.textTheme.bodyLarge?.copyWith(
       height: 1.34,
+      color: AppColors.grey,
     ),
     floatingLabelBehavior: FloatingLabelBehavior.never,
     contentPadding: const EdgeInsets.symmetric(vertical: 20),
