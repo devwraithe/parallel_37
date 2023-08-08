@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parallel_37/app/domain/usecases/auth_usecase/auth_status_verify_usecase.dart';
 import 'package:parallel_37/app/presentation/screens/auth_screens/sign_in_screen.dart';
-import 'package:parallel_37/app/presentation/screens/vendor/create_store_screen.dart';
+import 'package:parallel_37/app/presentation/screens/vendor/home_screen.dart';
 
 import 'core/routes/route_pages.dart';
 import 'core/theme/app_theme.dart';
@@ -29,7 +29,7 @@ class BiteHub extends ConsumerWidget {
             );
           } else {
             if (snapshot.hasData && snapshot.data!) {
-              return const CreateStoreScreen();
+              return const VendorHomeScreen();
             } else {
               return const SignInScreen();
             }
