@@ -76,6 +76,34 @@ class MenuRepositoryImpl implements MenuRepository {
   }
 
   @override
+  Future<void> createMenuItem(Map<String, dynamic> data) async {
+    try {
+      print("getting here: $data");
+      final storeCollection = Constants.firestore.collection("stores");
+      final storeDocRef = storeCollection.doc(data['store_id']);
+      final menuCollection = storeDocRef.collection("store_menu");
+      final menuDocRef = menuCollection.doc(data['menu_id']);
+      final menuItemCollection = menuDocRef.collection(data['name']);
+
+      await menuItemCollection.add({
+        'name': data['name'],
+        'price': data['price'],
+        'user_id': user!.uid,
+      }).then((value) {
+        debugPrint("Menu Item Created: $value");
+      }).catchError((err) {
+        debugPrint("Error Creating Menu Item: $err");
+      });
+    } on SocketException catch (e) {
+      debugPrint("SocketException: $e");
+      throw ConnectionException(Constants.socketError);
+    } catch (e) {
+      debugPrint("Something went wrong: $e");
+      throw AuthException(Constants.unknownError);
+    }
+  }
+
+  @override
   Future<String> getMenuDocId(Map<String, dynamic> data) async {
     try {
       final menu = Constants.firestore.collection('menu');

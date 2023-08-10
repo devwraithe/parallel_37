@@ -7,6 +7,7 @@ import 'package:parallel_37/app/presentation/screens/vendor/home_screen.dart';
 import '../../presentation/screens/auth_screens/sign_in_screen.dart';
 import '../../presentation/screens/auth_screens/sign_up_screen.dart';
 import '../../presentation/screens/vendor/create_menu_screen.dart';
+import '../../presentation/screens/vendor/menu_item_screen.dart';
 
 final appRoutes = <String, WidgetBuilder>{
   // authentication
@@ -18,4 +19,5 @@ final appRoutes = <String, WidgetBuilder>{
   Routes.vendorHome: (context) => const VendorHomeScreen(),
   Routes.createStore: (context) => const CreateStoreScreen(),
   Routes.createMenu: (context) => const CreateMenuScreen(),
+  Routes.menuItems: (context) => const MenuItemScreen(),
 };

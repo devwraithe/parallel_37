@@ -88,6 +88,14 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
                   const SizedBox(height: 12),
                   for (final menu in notifier.menuList)
                     ListTile(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        Routes.menuItems,
+                        arguments: {
+                          "menu_id": menu.id,
+                          "store_id": store.id,
+                        },
+                      ),
                       title: Text(menu.name),
                       subtitle: Text(menu.type),
                       trailing: const Icon(
