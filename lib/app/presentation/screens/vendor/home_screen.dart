@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:parallel_37/app/core/utilities/constants.dart';
+import 'package:parallel_37/app/presentation/notifiers/menu_notifiers/menu_list_notifier.dart';
 
 import '../../../core/routes/routes.dart';
 import '../../../core/theme/text_theme.dart';
@@ -19,6 +21,8 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
     ref.read(checkStoreProvider);
   }
 
+  void handleMenuList(MenuListNotifier notifier, data) {}
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(checkStoreProvider);
@@ -31,7 +35,10 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
             horizontal: 18,
             vertical: 24,
           ),
-          child: handleStoreAvailability(state, notifier),
+          child: handleStoreAvailability(
+            state,
+            notifier,
+          ),
         ),
       ),
     );
@@ -48,6 +55,7 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
       final store = notifier.storeModel!;
 
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Complete: ${store.id}"),
           const SizedBox(height: 18),
@@ -58,7 +66,38 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
               arguments: {'store_id': store.id},
             ),
             child: const Text("Create a new menu"),
-          )
+          ),
+          const SizedBox(height: 40),
+
+          // consumer for store menu list
+          Flexible(
+            child: Consumer(builder: (context, ref, child) {
+              final menuList = menuListProvider(store.id);
+              final state = ref.watch(menuList);
+              final notifier = ref.watch(menuList.notifier);
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Menu",
+                    style: AppTextTheme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  for (final menu in notifier.menuList)
+                    ListTile(
+                      title: Text(menu.name),
+                      subtitle: Text(menu.type),
+                      trailing: const Icon(
+                        TablerIcons.arrow_right,
+                      ),
+                    )
+                ],
+              );
+            }),
+          ),
         ],
       );
     } else if (state == CheckStoreStates.failed) {

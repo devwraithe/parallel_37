@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parallel_37/app/core/utilities/constants.dart';
+import 'package:parallel_37/app/data/models/menu_model.dart';
 
 import '../../core/utilities/errors/exceptions.dart';
+import '../../core/utilities/errors/failure.dart';
 import '../../domain/repositories/menu_repository.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
@@ -21,36 +25,53 @@ class MenuRepositoryImpl implements MenuRepository {
       await menuCollection.add({
         'menu_type': data['menu_type'],
         'menu_name': data['menu_name'],
+        'user_id': user!.uid,
       }).then((value) {
         debugPrint("Menu Created: $value");
       }).catchError((err) {
         debugPrint("Error Creating Menu: $err");
       });
-
-      // reference to the parent document i.e stores
-      // final storesCollectionRef = Constants.firestore.collection("stores");
-      // final storesDocumentRef = storesCollectionRef.doc(data['store_id']);
-
-      // // create a sub-collection in the parent doc
-      // final menuCollectionRef = Constants.firestore.collection('menu');
-      //
-      // print("Menu - ${menuCollectionRef}");
-      //
-      // // // add info to the sub-collection
-      // // menuCollectionRef.add({
-      // //   "collection_info": "something for the menu docs",
-      // //   "store_id": data['store_id'],
-      // // }).then((value) {
-      // //   debugPrint("Done: $value");
-      // // }).catchError((err) {
-      // //   debugPrint("Error: $err");
-      // // });
     } on SocketException catch (e) {
       debugPrint("SocketException: $e");
       throw ConnectionException(Constants.socketError);
     } catch (e) {
       debugPrint("Something went wrong: $e");
       throw AuthException(Constants.unknownError);
+    }
+  }
+
+  // show the a list of the menu
+  @override
+  Future<Either<Failure, List<MenuModel>>> getMenu(String id) async {
+    try {
+      final storeCollection = Constants.firestore.collection("stores");
+      final storeDocRef = storeCollection.doc(id);
+      final querySnapshot = await storeDocRef
+          .collection('store_menu')
+          // retrieve menu with the user_id or store id (poss)
+          .where('user_id', isEqualTo: user!.uid)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        debugPrint("[QUERY DATA SNAPSHOT] ${querySnapshot.docs.first.data()}");
+        final menuList = querySnapshot.docs.map((menu) {
+          return MenuModel.fromSnapshot(menu);
+        }).toList();
+        debugPrint("[PARSE IN MODEL] ${menuList.length}");
+        return Right(menuList);
+      } else {
+        return Left(Failure("No Menu"));
+      }
+    } on SocketException catch (_) {
+      throw ConnectionException(Constants.socketError);
+    } on FirebaseAuthException catch (e) {
+      debugPrint("[AUTH EXCEPTION] $e");
+      throw ServerException(e.toString());
+    } on FirebaseException catch (e) {
+      debugPrint("[FIREBASE EXCEPTION] $e");
+      throw ServerException(e.toString());
+    } catch (e) {
+      debugPrint("[SOMETHING WENT WRONG]: $e");
+      throw ServerException(e.toString());
     }
   }
 
