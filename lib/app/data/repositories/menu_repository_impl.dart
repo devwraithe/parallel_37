@@ -10,6 +10,7 @@ import 'package:parallel_37/app/data/models/menu_model.dart';
 import '../../core/utilities/errors/exceptions.dart';
 import '../../core/utilities/errors/failure.dart';
 import '../../domain/repositories/menu_repository.dart';
+import '../models/menu_item_model.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
   // global variables
@@ -78,12 +79,11 @@ class MenuRepositoryImpl implements MenuRepository {
   @override
   Future<void> createMenuItem(Map<String, dynamic> data) async {
     try {
-      print("getting here: $data");
       final storeCollection = Constants.firestore.collection("stores");
       final storeDocRef = storeCollection.doc(data['store_id']);
       final menuCollection = storeDocRef.collection("store_menu");
       final menuDocRef = menuCollection.doc(data['menu_id']);
-      final menuItemCollection = menuDocRef.collection(data['name']);
+      final menuItemCollection = menuDocRef.collection(data['type']);
 
       await menuItemCollection.add({
         'name': data['name'],
@@ -100,6 +100,46 @@ class MenuRepositoryImpl implements MenuRepository {
     } catch (e) {
       debugPrint("Something went wrong: $e");
       throw AuthException(Constants.unknownError);
+    }
+  }
+
+  // show the a list of the menu
+  @override
+  Future<Either<Failure, List<MenuItemModel>>> getMenuItems(
+      Map<String, dynamic> data) async {
+    try {
+      print("Data coming from ui: $data");
+      final storeCollection = Constants.firestore.collection("stores");
+      final storeDocRef = storeCollection.doc(data['store_id']);
+      final menuCollection = storeDocRef.collection("store_menu");
+      final menuDocRef = menuCollection.doc(data['menu_id']);
+
+      final querySnapshot = await menuDocRef
+          .collection(data['type'])
+          // retrieve menu with the user_id or store id (poss)
+          .where('user_id', isEqualTo: user!.uid)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        debugPrint("[QUERY DATA SNAPSHOT] ${querySnapshot.docs.first.data()}");
+        final menuItemList = querySnapshot.docs.map((menu) {
+          return MenuItemModel.fromSnapshot(menu);
+        }).toList();
+        debugPrint("[PARSE IN MODEL] ${menuItemList.length}");
+        return Right(menuItemList);
+      } else {
+        return Left(Failure("No Menu"));
+      }
+    } on SocketException catch (_) {
+      throw ConnectionException(Constants.socketError);
+    } on FirebaseAuthException catch (e) {
+      debugPrint("[AUTH EXCEPTION] $e");
+      throw ServerException(e.toString());
+    } on FirebaseException catch (e) {
+      debugPrint("[FIREBASE EXCEPTION] $e");
+      throw ServerException(e.toString());
+    } catch (e) {
+      debugPrint("[SOMETHING WENT WRONG]: $e");
+      throw ServerException(e.toString());
     }
   }
 
