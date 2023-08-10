@@ -8,4 +8,5 @@ class Routes {
   static String vendorHome = "/vendor_home";
   static String createStore = "/create_store";
   static String createMenu = "/create_menu";
+  static String menuItems = "/menu_items";
 }
