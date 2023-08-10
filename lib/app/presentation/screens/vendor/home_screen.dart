@@ -94,6 +94,7 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
                         arguments: {
                           "menu_id": menu.id,
                           "store_id": store.id,
+                          "type": menu.type,
                         },
                       ),
                       title: Text(menu.name),
@@ -101,7 +102,7 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
                       trailing: const Icon(
                         TablerIcons.arrow_right,
                       ),
-                    )
+                    ),
                 ],
               );
             }),
