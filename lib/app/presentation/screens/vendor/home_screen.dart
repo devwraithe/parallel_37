@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:parallel_37/app/core/routes/routes.dart';
-import 'package:parallel_37/app/core/theme/text_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parallel_37/app/core/utilities/constants.dart';
 
-class VendorHomeScreen extends StatefulWidget {
+import '../../../core/routes/routes.dart';
+import '../../../core/theme/text_theme.dart';
+import '../../notifiers/store_notifiers/check_store_notifier.dart';
+
+class VendorHomeScreen extends ConsumerStatefulWidget {
   const VendorHomeScreen({super.key});
-
   @override
-  State<VendorHomeScreen> createState() => _VendorHomeScreenState();
+  VendorHomeScreenState createState() => VendorHomeScreenState();
 }
 
-class _VendorHomeScreenState extends State<VendorHomeScreen> {
+class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(checkStoreProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(checkStoreProvider);
+    final notifier = ref.watch(checkStoreProvider.notifier);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -19,30 +31,47 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
             horizontal: 18,
             vertical: 24,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "You don't seem to have a store yet!",
-                style: AppTextTheme.textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () => Navigator.pushNamed(
-                  context,
-                  Routes.createStore,
-                ),
-                child: const Text("Create a store"),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                "Switch to Personal",
-                style: AppTextTheme.textTheme.bodyLarge,
-              ),
-            ],
-          ),
+          child: handleStoreAvailability(state, notifier),
         ),
       ),
     );
+  }
+
+  // handle the display based on the condition
+  Widget handleStoreAvailability(
+    CheckStoreStates state,
+    CheckStoreNotifier notifier,
+  ) {
+    if (state == CheckStoreStates.loading) {
+      return const Text("Loading");
+    } else if (state == CheckStoreStates.complete) {
+      return Text("Complete: ${notifier.storeModel!.id}");
+    } else if (state == CheckStoreStates.failed) {
+      if (notifier.error == Constants.noStoreResponse) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You don't seem to have a store yet!",
+              style: AppTextTheme.textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => Navigator.pushNamed(
+                context,
+                Routes.createStore,
+              ),
+              child: const Text("Create a store"),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              "Switch to Personal",
+              style: AppTextTheme.textTheme.bodyLarge,
+            ),
+          ],
+        );
+      }
+    }
+    return const SizedBox();
   }
 }
