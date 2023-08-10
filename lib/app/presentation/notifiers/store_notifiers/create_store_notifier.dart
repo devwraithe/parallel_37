@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/usecases/auth_usecase/create_account_usecase.dart';
 import '../../../domain/usecases/store_usecases/create_store_usecase.dart';
 
 enum CreateStoreState { initial, loading, success, failed }

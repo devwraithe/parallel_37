@@ -8,26 +8,24 @@ import '../../core/utilities/errors/exceptions.dart';
 import '../../domain/repositories/menu_repository.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
+  // global variables
+  final user = Constants.firebaseAuth.currentUser;
+
   @override
   Future<void> createMenu(Map<String, dynamic> data) async {
     try {
-      // for stores
       final storeCollection = Constants.firestore.collection("stores");
       final storeDocRef = storeCollection.doc(data['store_id']);
-
       final menuCollection = storeDocRef.collection("store_menu");
-      // final menuDocRef = menuCollection.doc();
-      // final menuId = menuDocRef.id;
 
-      // add a menu to the store menu
-      menuCollection;
-      //     .add({
-      //   'user_id': Constants.firebaseAuth.currentUser!.uid,
-      // }).then((value) {
-      //   debugPrint("Store Created: $value");
-      // }).catchError((err) {
-      //   debugPrint("Error Creating Store: $err");
-      // });
+      await menuCollection.add({
+        'menu_type': data['menu_type'],
+        'menu_name': data['menu_name'],
+      }).then((value) {
+        debugPrint("Menu Created: $value");
+      }).catchError((err) {
+        debugPrint("Error Creating Menu: $err");
+      });
 
       // reference to the parent document i.e stores
       // final storesCollectionRef = Constants.firestore.collection("stores");

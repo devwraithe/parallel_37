@@ -19,12 +19,9 @@ class StoreRepositoryImpl implements StoreRepository {
   Future<void> createStore(Map<String, dynamic> data) async {
     try {
       final storeCollection = Constants.firestore.collection("stores");
-      final storeDocRef = storeCollection.doc();
-      // final storeId = storeDocRef.id;
 
       await storeCollection.add({
         'user_id': Constants.firebaseAuth.currentUser!.uid,
-        // 'store_id': storeId,
         'name': data['name'],
         'email': data['email'],
         'phone': data['phone'],
