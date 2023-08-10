@@ -31,7 +31,7 @@ class _CreateStoreScreenState extends State<CreateStoreScreen> {
       formState.save();
       final result = await notifier.createStore(data);
       if (result == CreateStoreState.success) {
-        Navigator.pushNamed(context, Routes.createMenu);
+        Navigator.pushNamed(context, Routes.vendorHome);
       } else if (result == CreateStoreState.failed) {
         UiHelpers.errorFlush(
           notifier.error!,

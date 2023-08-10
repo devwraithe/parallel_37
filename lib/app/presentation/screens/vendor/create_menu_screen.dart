@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parallel_37/app/core/routes/routes.dart';
 import 'package:parallel_37/app/core/theme/text_theme.dart';
 import 'package:parallel_37/app/core/utilities/helpers/validator_helpers.dart';
-import 'package:parallel_37/app/presentation/notifiers/menu_notifiers/add_item_to_menu_notifier.dart';
-import 'package:parallel_37/app/presentation/notifiers/menu_notifiers/get_menu_doc_id_notifier.dart';
-import 'package:parallel_37/app/presentation/notifiers/store_notifiers/get_store_id_notifier.dart';
 
 import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
@@ -18,83 +16,38 @@ class CreateMenuScreen extends ConsumerStatefulWidget {
 }
 
 class CreateMenuScreenState extends ConsumerState<CreateMenuScreen> {
-  // Future<String> retrieveId() async {
-  //
-  //   return storeDocId;
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    // "ref" can be used in all life-cycles of a StatefulWidget.
-    ref.read(getStoreIdProvider);
-    ref.read(getMenuDocIdProvider);
-  }
-
   final _key = GlobalKey<FormState>(debugLabel: 'create-menu');
 
   final Map<String, dynamic> data = {
+    "menu_type": "",
+    "menu_name": "",
     "store_id": "",
   };
 
-  _createMenu(context, CreateMenuNotifier notifier) async {
-    final idNotifier = ref.watch(getStoreIdProvider.notifier);
-    final storeDocId = await idNotifier.getStoreId();
-    setState(() => data['store_id'] = storeDocId);
-    debugPrint("Store Document ID: ${data.toString()}");
-
+  _submit(context, CreateMenuNotifier notifier) async {
     final formState = _key.currentState!;
 
-    // if (formState.validate()) {
-    // formState.save();
-    // final result =
-    await notifier.createMenu(data);
-    // if (result == CreateMenuState.success) {
-    //   // navigate to home
-    // } else if (result == CreateMenuState.failed) {
-    //   UiHelpers.errorFlush(
-    //     notifier.error!,
-    //     context,
-    //   );
-    // }
-    // }
-  }
-
-  final Map<String, dynamic> menuData = {
-    "menu_id": "",
-    "store_id": "",
-  };
-
-  // handle adding item to menu
-  _addItemToMenu(context, AddItemToMenuNotifier notifier) async {
-    final idNotifier = ref.watch(getStoreIdProvider.notifier);
-    final storeDocId = await idNotifier.getStoreId();
-    setState(() => data['store_id'] = storeDocId);
-    final menuIdNotifier = ref.watch(getMenuDocIdProvider.notifier);
-    final menuDocId = await menuIdNotifier.getMenuDocId(data);
-    setState(() => data['menu_id'] = menuDocId);
-    debugPrint("Menu Document ID: ${data.toString()}");
-
-    final formState = _key.currentState!;
-
-    // if (formState.validate()) {
-    // formState.save();
-    // final result =
-    await notifier.addItemToMenu(data);
-    // if (result == CreateMenuState.success) {
-    //   // navigate to home
-    // } else if (result == CreateMenuState.failed) {
-    //   UiHelpers.errorFlush(
-    //     notifier.error!,
-    //     context,
-    //   );
-    // }
-    // }
+    if (formState.validate()) {
+      formState.save();
+      final result = await notifier.createMenu(data);
+      if (result == CreateMenuState.success) {
+        Navigator.pushNamed(context, Routes.vendorHome);
+      } else if (result == CreateMenuState.failed) {
+        UiHelpers.errorFlush(
+          notifier.error!,
+          context,
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     const textTheme = AppTextTheme.textTheme;
+
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    data['store_id'] = arguments?['store_id'];
 
     return Scaffold(
       body: SafeArea(
@@ -123,11 +76,11 @@ class CreateMenuScreenState extends ConsumerState<CreateMenuScreen> {
                 TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    hintText: "Name e.g Hank's Steaks",
+                    hintText: "Menu Name e.g Burgers",
                     prefix: Constants.prefixSpace,
                   ),
                   autovalidateMode: Constants.validateMode,
-                  onSaved: (v) => data['name'] = v,
+                  onSaved: (v) => data['menu_name'] = v,
                   validator: (v) => ValidatorHelper.storeName(v),
                   style: textTheme.bodyLarge,
                 ),
@@ -135,64 +88,26 @@ class CreateMenuScreenState extends ConsumerState<CreateMenuScreen> {
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: "Email e.g order@hanksteaks.com",
+                    hintText: "Menu Type e.g Fast Food",
                     prefix: Constants.prefixSpace,
                   ),
                   autovalidateMode: Constants.validateMode,
-                  onSaved: (v) => data['email'] = v,
+                  onSaved: (v) => data['menu_type'] = v,
                   validator: (v) => ValidatorHelper.storeEmail(v),
-                  style: textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 14),
-                TextFormField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    hintText: "Phone Number e.g +1 234 567 890",
-                    prefix: Constants.prefixSpace,
-                  ),
-                  autovalidateMode: Constants.validateMode,
-                  onSaved: (v) => data['phone'] = v,
-                  validator: (v) => ValidatorHelper.storePhone(v),
-                  style: textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 14),
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: "Location e.g Manhattan, New York",
-                    prefix: Constants.prefixSpace,
-                  ),
-                  autovalidateMode: Constants.validateMode,
-                  onSaved: (v) => data['location'] = v,
-                  validator: (v) => ValidatorHelper.storeLocation(v),
                   style: textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20),
                 Consumer(
                   builder: (context, ref, _) {
                     // create a menu providers
-                    final stateA = ref.watch(createMenuProvider);
-                    final notifierA = ref.read(createMenuProvider.notifier);
+                    final state = ref.watch(createMenuProvider);
+                    final notifier = ref.read(createMenuProvider.notifier);
 
                     return FilledButton(
-                      onPressed: () => _createMenu(context, notifierA),
-                      child: stateA == CreateMenuState.loading
+                      onPressed: () => _submit(context, notifier),
+                      child: state == CreateMenuState.loading
                           ? UiHelpers.loader()
-                          : const Text("Create a menu"),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Consumer(
-                  builder: (context, ref, _) {
-                    final stateB = ref.watch(addItemToMenuProvider);
-                    final notifierB = ref.read(addItemToMenuProvider.notifier);
-
-                    return FilledButton(
-                      onPressed: () => _addItemToMenu(context, notifierB),
-                      child: stateB == AddItemToMenuState.loading
-                          ? UiHelpers.loader()
-                          : const Text("Create a menu item"),
+                          : const Text("Create menu"),
                     );
                   },
                 ),

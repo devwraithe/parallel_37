@@ -45,7 +45,22 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
     if (state == CheckStoreStates.loading) {
       return const Text("Loading");
     } else if (state == CheckStoreStates.complete) {
-      return Text("Complete: ${notifier.storeModel!.id}");
+      final store = notifier.storeModel!;
+
+      return Column(
+        children: [
+          Text("Complete: ${store.id}"),
+          const SizedBox(height: 18),
+          FilledButton(
+            onPressed: () => Navigator.pushNamed(
+              context,
+              Routes.createMenu,
+              arguments: {'store_id': store.id},
+            ),
+            child: const Text("Create a new menu"),
+          )
+        ],
+      );
     } else if (state == CheckStoreStates.failed) {
       if (notifier.error == Constants.noStoreResponse) {
         return Column(
