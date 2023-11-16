@@ -81,7 +81,7 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/collection-1.17.1",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/collection-1.17.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -225,7 +225,7 @@
     },
     {
       "name": "flutter_tabler_icons",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/flutter_tabler_icons-1.2.0",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/flutter_tabler_icons-1.7.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -267,15 +267,15 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/matcher-0.12.15",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/matcher-0.12.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/material_color_utilities-0.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.13"
+      "languageVersion": "2.17"
     },
     {
       "name": "meta",
@@ -459,9 +459,9 @@
     },
     {
       "name": "source_span",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/source_span-1.9.1",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "sqflite",
@@ -513,7 +513,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/test_api-0.5.1",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/test_api-0.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -534,6 +534,12 @@
       "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "web",
+      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.dev/web-0.1.4-beta",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "win32",
@@ -560,7 +566,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-08-08T13:27:28.935582Z",
+  "generated": "2023-11-16T23:31:37.942270Z",
   "generator": "pub",
-  "generatorVersion": "3.0.0"
+  "generatorVersion": "3.1.4"
 }

@@ -23,6 +23,12 @@ class _SignInScreenState extends State<SignInScreen> {
     "password": "",
   };
 
+  // Show and hide password
+  bool _obscureText = true;
+  void _togglePassword() {
+    setState(() => _obscureText = !_obscureText);
+  }
+
   _submit(context, LoginNotifier notifier) async {
     final formState = key.currentState!;
 
@@ -88,11 +94,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   decoration: InputDecoration(
                     hintText: "Password",
                     prefix: Constants.prefixSpace,
+                    suffixIcon: UiHelpers.switchPassword(
+                      () => _togglePassword(),
+                      _obscureText,
+                    ),
                   ),
                   autovalidateMode: Constants.validateMode,
                   onSaved: (v) => data['password'] = v,
                   validator: (v) => ValidatorHelper.password(v),
                   style: textTheme.bodyLarge,
+                  obscureText: _obscureText ? true : false,
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
