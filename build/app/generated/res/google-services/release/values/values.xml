@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">279982633324-mq380mdbmg0r5q5eft1p8meek00oegsj.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">279982633324</string>
+    <string name="google_api_key" translatable="false">AIzaSyC58Mf7T-sT-Gf1vpFGwkcfeCkFsq74sQw</string>
+    <string name="google_app_id" translatable="false">1:279982633324:android:2b396e80760c70831b4349</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyC58Mf7T-sT-Gf1vpFGwkcfeCkFsq74sQw</string>
+    <string name="google_storage_bucket" translatable="false">bitehub-d6d3a.appspot.com</string>
+    <string name="project_id" translatable="false">bitehub-d6d3a</string>
+</resources>

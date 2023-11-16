@@ -1,0 +1,190 @@
+{
+  "status": "true",
+  "code": 200,
+  "msg": "Success",
+  "data": [
+    {
+      "id": 1,
+      "name": "McDonald's",
+      "image": "https://images.pexels.com/photos/4021944/pexels-photo-4021944.jpeg",
+      "store_type": "Fast Food",
+      "delivery": "Free",
+      "rating": "86%",
+      "pickup": "Available",
+      "time_range": "15 to 25 mins",
+      "products": [
+        {
+          "title": "Breakfast",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Quarter Pounder with Cheese Deluxe",
+              "image": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.69,
+              "publisher_id": 1,
+              "ingredients": "Quarter Pound 100% Beef Patty, Quarter Pound Bun, Pasteurized Process American Cheese, Roma Tomato, Ketchup, Shredded Lettuce, Mayonnaise, Pickle Slices, Onions, Mustard",
+              "calories": 550
+            },
+            {
+              "product_id": 2,
+              "name": "Bacon, Egg & Cheese Biscuit",
+              "image": "https://images.pexels.com/photos/1543613/pexels-photo-1543613.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.69,
+              "publisher_id": 1,
+              "ingredients": "Biscuit, Folded Egg, Pasteurized Process American Cheese, Thick Cut Applewood Smoked Bacon, Salted Butter, Clarified Butter",
+              "calories": 460
+            }
+          ]
+        },
+        {
+          "title": "Burgers",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Quarter Pounder with Cheese Deluxe",
+              "image": "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.69,
+              "publisher_id": 1,
+              "ingredients": "Quarter Pound 100% Beef Patty, Quarter Pound Bun, Pasteurized Process American Cheese, Roma Tomato, Ketchup, Shredded Lettuce, Mayonnaise, Pickle Slices, Onions, Mustard",
+              "calories": 550
+            },
+            {
+              "product_id": 2,
+              "name": "Bacon, Egg & Cheese Biscuit",
+              "image": "https://images.pexels.com/photos/1543613/pexels-photo-1543613.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.69,
+              "publisher_id": 1,
+              "ingredients": "Biscuit, Folded Egg, Pasteurized Process American Cheese, Thick Cut Applewood Smoked Bacon, Salted Butter, Clarified Butter",
+              "calories": 460
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "The Turkish Grill",
+      "image": "https://images.pexels.com/photos/6419720/pexels-photo-6419720.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "store_type": "Grill",
+      "delivery": "Free",
+      "rating": "90%",
+      "pickup": "Not Available",
+      "time_range": "55 to 60 mins",
+      "products": [
+        {
+          "title": "Kebabs",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Chicken Chops Kebab (3pcs)",
+              "image": "https://images.pexels.com/photos/5191849/pexels-photo-5191849.jpeg?auto=compress&cs=tinysrgb&w=600",
+              "price": 8.75,
+              "publisher_id": 2,
+              "ingredients": "Chargrilled, Chicken Thighs, Salads, Rice, Chips, Roti",
+              "calories": 450
+            },
+            {
+              "product_id": 2,
+              "name": "Chicken Wings Kebab",
+              "image": "https://images.pexels.com/photos/1543613/pexels-photo-1543613.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.22,
+              "publisher_id": 2,
+              "ingredients": "Chargrilled, Chicken Breast, Spices, Salads, Rice, Chips, Roti",
+              "calories": 350
+            }
+          ]
+        },
+        {
+          "title": "Shawarma (Doner)",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Beef Shawarma",
+              "image": "https://images.pexels.com/photos/8018079/pexels-photo-8018079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 8.45,
+              "publisher_id": 2,
+              "ingredients": "Shredded Beef Steak, Rice, Chips, Roti",
+              "calories": 550
+            },
+            {
+              "product_id": 2,
+              "name": "Chicken Shawarma",
+              "image": "https://images.pexels.com/photos/7904958/pexels-photo-7904958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 9.1,
+              "publisher_id": 2,
+              "ingredients": "Thinly Sliced Beef, Special Tomato Sauce",
+              "calories": 460
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Pizza Central",
+      "image": "https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "store_type": "Italian",
+      "delivery": "Free",
+      "rating": "95%",
+      "pickup": "Available",
+      "time_range": "15 to 25 mins",
+      "products": [
+        {
+          "title": "Non-Vegan Pizzas",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Four Cheese Pizza",
+              "image": "https://images.pexels.com/photos/845812/pexels-photo-845812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 13.20,
+              "publisher_id": 3,
+              "ingredients": "Melting contrast of Italian mozzarella, intense blue cheese, sweet gouda cheese and smoked provolone. Base with homemade natural tomato sauce.",
+              "calories": 500
+            },
+            {
+              "product_id": 2,
+              "name": "Margherita Pizza",
+              "image": "https://images.pexels.com/photos/12944630/pexels-photo-12944630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 16.5,
+              "publisher_id": 3,
+              "ingredients": "Extra cooked ham, mixed with natural mushroom slices. Italian mozzarella base with homemade natural tomato sauce.",
+              "calories": 460
+            },
+            {
+              "product_id": 3,
+              "name": "Chicken BBQ Pizza",
+              "image": "https://images.pexels.com/photos/4288047/pexels-photo-4288047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 12.40,
+              "publisher_id": 3,
+              "ingredients": "Grilled chicken in strips, with fresh red onion sliced ​​and homemade barbecue sauce. Italian mozzarella base with homemade natural tomato sauce.",
+              "calories": 460
+            }
+          ]
+        },
+        {
+          "title": "Vegan Pizzas",
+          "items": [
+            {
+              "product_id": 1,
+              "name": "Veggie Lovers Pizza",
+              "image": "https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 12.40,
+              "publisher_id": 3,
+              "ingredients": "Nutritious pizza with fresh arugula, natural mushrooms, black olives and extra virgin olive oil. Italian mozzarella base with homemade natural tomato sauce.",
+              "calories": 550
+            },
+            {
+              "product_id": 2,
+              "name": "Hawaiian Pizza",
+              "image": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              "price": 12.40,
+              "publisher_id": 3,
+              "ingredients": "Italian mozzarella mix. Accompanied by extra cooked ham and the sweet freshness of pineapple. Base with homemade natural tomato sauce.",
+              "calories": 460
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

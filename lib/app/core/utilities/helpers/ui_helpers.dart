@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:parallel_37/app/core/utilities/constants.dart';
 
 import '../../theme/app_colors.dart';
@@ -40,5 +41,14 @@ class UiHelpers {
       flushbarPosition: FlushbarPosition.BOTTOM,
       padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
     )..show(context);
+  }
+
+  static switchPassword(void Function()? onTap, bool obscurePassword) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(
+        obscurePassword == true ? TablerIcons.eye_off : TablerIcons.eye,
+      ),
+    );
   }
 }
