@@ -6,7 +6,7 @@ import 'package:parallel_37/app/core/utilities/helpers/validator_helpers.dart';
 
 import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
-import '../../notifiers/menu_notifiers/create_menu_notifier.dart';
+import '../../cubits/menu_notifiers/create_menu_notifier.dart';
 
 class CreateMenuScreen extends ConsumerStatefulWidget {
   const CreateMenuScreen({super.key});

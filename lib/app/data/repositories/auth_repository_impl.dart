@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parallel_37/app/core/utilities/constants.dart';
+import 'package:parallel_37/app/core/utilities/errors/failure.dart';
 
 import '../../core/utilities/errors/exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -14,44 +15,22 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl(this._auth);
 
   @override
-  Future<User?> createAccount(Map<String, dynamic> data) async {
-    try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
-        email: data['email'],
-        password: data['password'],
-      );
-      return userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        throw AuthException("Account already exists for this email");
-      } else if (e.code == 'weak-password') {
-        throw AuthException("Password should be greater than 6 characters");
-      } else if (e.code == 'invalid-email') {
-        throw AuthException("You provided an invalid email address");
-      }
-    } on SocketException catch (e) {
-      throw ConnectionException(Constants.socketError);
-    } catch (e) {
-      throw AuthException(Constants.unknownError);
-    }
-    return null;
-  }
-
-  @override
-  Future<void> login(Map<String, dynamic> data) async {
+  Future<Either<Failure, void>> login(Map<String, dynamic> data) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: data['email'],
         password: data['password'],
       );
+      return const Right(null);
     } on FirebaseAuthException catch (e) {
-      debugPrint("AuthException: $e");
       if (e.code == 'user-not-found') {
-        throw AuthException("No user found for this email");
+        return Left(Failure("No user found for this email"));
       } else if (e.code == 'wrong-password') {
-        throw AuthException("You have entered an incorrect password");
+        return Left(Failure("You have entered an incorrect password"));
       } else if (e.code == 'invalid-email') {
-        throw AuthException("You provided an invalid email address");
+        return Left(Failure("You provided an invalid email address"));
+      } else {
+        return Left(Failure(Constants.unknownError));
       }
     } on SocketException catch (e) {
       throw ConnectionException(Constants.socketError);
@@ -61,27 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> passwordReset(Map<String, dynamic> data) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: data['email']);
-    } on FirebaseAuthException catch (e) {
-      debugPrint("AuthException: $e");
-      if (e.code == 'user-not-found') {
-        throw AuthException("No user found for this email");
-      } else if (e.code == 'invalid-email') {
-        throw AuthException("You provided an invalid email address");
-      }
-    } on SocketException catch (e) {
-      debugPrint("SocketException: $e");
-      throw ConnectionException(Constants.socketError);
-    } catch (e) {
-      debugPrint("Error resetting password: $e");
-      throw AuthException(Constants.unknownError);
-    }
-  }
-
-  @override
-  Future<void> signOut() async {
+  Future<void> logout() async {
     try {
       await _auth.signOut();
     } on FirebaseAuthException catch (e) {
@@ -102,12 +61,3 @@ class AuthRepositoryImpl implements AuthRepository {
     return user != null;
   }
 }
-
-// provider
-final authRepoProvider = Provider<AuthRepository>(
-  (ref) {
-    return AuthRepositoryImpl(
-      Constants.firebaseAuth,
-    );
-  },
-);

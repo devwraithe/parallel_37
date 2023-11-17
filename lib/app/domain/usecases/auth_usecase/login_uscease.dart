@@ -1,19 +1,17 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dartz/dartz.dart';
 import 'package:parallel_37/app/domain/repositories/auth_repository.dart';
 
-import '../../../data/repositories/auth_repository_impl.dart';
+import '../../../core/utilities/errors/failure.dart';
 
 class LoginUsecase {
-  final AuthRepository _repo;
-  LoginUsecase(this._repo);
+  final AuthRepository _repository;
+  LoginUsecase(this._repository);
 
-  Future<void> execute(Map<String, dynamic> data) async {
-    await _repo.login(data);
+  Future<Either<Failure, void>> call(Map<String, dynamic> data) async {
+    final response = await _repository.login(data);
+    return response.fold(
+      (failure) => Left(failure),
+      (user) => const Right(null),
+    );
   }
 }
-
-final loginUsecaseProvider = Provider<LoginUsecase>(
-  (ref) => LoginUsecase(
-    ref.watch(authRepoProvider),
-  ),
-);
