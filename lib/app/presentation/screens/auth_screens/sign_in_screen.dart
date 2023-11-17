@@ -106,17 +106,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   obscureText: _obscureText ? true : false,
                 ),
                 const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    Routes.passwordReset,
-                  ),
-                  child: Text(
-                    "Forgot password?",
-                    style: textTheme.bodyLarge,
-                  ),
-                ),
-                const SizedBox(height: 20),
                 Consumer(
                   builder: (context, ref, _) {
                     final state = ref.watch(loginProvider);
@@ -129,26 +118,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           : const Text("Sign In"),
                     );
                   },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have a BiteHub account? ",
-                      style: textTheme.bodyLarge,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        Routes.signUp,
-                      ),
-                      child: Text(
-                        "Create account",
-                        style: textTheme.titleLarge,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
