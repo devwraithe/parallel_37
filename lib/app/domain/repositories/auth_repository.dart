@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dartz/dartz.dart';
+import 'package:parallel_37/app/core/utilities/errors/failure.dart';
 
 abstract class AuthRepository {
-  Future<User?> createAccount(Map<String, dynamic> data);
-  Future<void> login(Map<String, dynamic> data);
-  Future<void> passwordReset(Map<String, dynamic> data);
+  Future<Either<Failure, void>> login(Map<String, dynamic> data);
   Future<bool> checkAuthStatus();
-  Future<void> signOut();
+  Future<void> logout();
 }

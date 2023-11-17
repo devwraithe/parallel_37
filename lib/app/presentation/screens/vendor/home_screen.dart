@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:parallel_37/app/core/utilities/constants.dart';
-import 'package:parallel_37/app/presentation/notifiers/menu_notifiers/menu_list_notifier.dart';
 
 import '../../../core/routes/routes.dart';
 import '../../../core/theme/text_theme.dart';
-import '../../notifiers/store_notifiers/check_store_notifier.dart';
+import '../../cubits/menu_notifiers/menu_list_notifier.dart';
+import '../../cubits/store_notifiers/check_store_notifier.dart';
 
 class VendorHomeScreen extends ConsumerStatefulWidget {
   const VendorHomeScreen({super.key});

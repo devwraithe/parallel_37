@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parallel_37/app/presentation/notifiers/menu_notifiers/create_menu_item_notifier.dart';
 
 import '../../../core/theme/text_theme.dart';
 import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
 import '../../../core/utilities/helpers/validator_helpers.dart';
-import '../../notifiers/menu_notifiers/menu_item_list_notifier.dart';
+import '../../cubits/menu_notifiers/create_menu_item_notifier.dart';
+import '../../cubits/menu_notifiers/menu_item_list_notifier.dart';
 
 class MenuItemScreen extends StatefulWidget {
   const MenuItemScreen({super.key});

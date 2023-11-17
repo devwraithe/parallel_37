@@ -6,7 +6,7 @@ import 'package:parallel_37/app/core/utilities/helpers/validator_helpers.dart';
 import '../../../core/routes/routes.dart';
 import '../../../core/utilities/constants.dart';
 import '../../../core/utilities/helpers/ui_helpers.dart';
-import '../../notifiers/store_notifiers/create_store_notifier.dart';
+import '../../cubits/store_notifiers/create_store_notifier.dart';
 
 class CreateStoreScreen extends StatefulWidget {
   const CreateStoreScreen({super.key});
