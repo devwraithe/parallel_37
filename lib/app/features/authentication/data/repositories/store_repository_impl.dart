@@ -55,7 +55,7 @@ class StoreRepositoryImpl implements StoreRepository {
         debugPrint("[PARSE IN MODEL] ${store.id}");
         return Right(store);
       } else {
-        return Left(Failure(Constants.noStoreResponse));
+        return Left(Failure(""));
       }
     } on SocketException catch (_) {
       throw ConnectionException(Constants.socketError);

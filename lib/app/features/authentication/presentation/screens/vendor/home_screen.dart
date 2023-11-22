@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:parallel_37/app/core/utilities/constants.dart';
 
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/text_theme.dart';
@@ -110,7 +109,7 @@ class VendorHomeScreenState extends ConsumerState<VendorHomeScreen> {
         ],
       );
     } else if (state == CheckStoreStates.failed) {
-      if (notifier.error == Constants.noStoreResponse) {
+      if (notifier.error == "") {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

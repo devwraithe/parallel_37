@@ -20,6 +20,7 @@ void init() {
 
   // Inventory injectors
   addCategoryInjector();
+  getCategoriesInjector();
 
   // base injectors
   authInjector();

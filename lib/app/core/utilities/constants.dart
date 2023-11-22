@@ -8,7 +8,8 @@ class Constants {
   static String fontFamily = "Mona";
   static String socketError = "No Internet Connection";
   static String unknownError = "Something went wrong";
-  static String noStoreResponse = "no-store";
+  static String timeout = "Error connecting";
+  static String empty = "Nothing here yet";
 
   // double
   static double inputRadius = 6;
