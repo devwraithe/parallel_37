@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:parallel_37/app/core/utilities/injectors/inventory_injector.dart';
 
 import '../injectors/auth_injector.dart';
 
@@ -17,6 +18,10 @@ void init() {
   loginInjector();
   verifyAuthInjector();
 
+  // Inventory injectors
+  addCategoryInjector();
+
   // base injectors
   authInjector();
+  inventoryInjector();
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parallel_37/app/features/inventory/presentation/screens/inventory_screen.dart';
 
 import 'core/routes/route_pages.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utilities/helpers/bloc_providers.dart';
-import 'features/authentication/presentation/screens/login_screen.dart';
 
 class BiteHub extends StatelessWidget {
   const BiteHub({super.key});
@@ -18,7 +18,7 @@ class BiteHub extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         themeMode: ThemeMode.light,
-        home: const LoginScreen(),
+        home: const InventoryScreen(),
         routes: appRoutes,
       ),
     );

@@ -24,7 +24,7 @@ class ValidatorHelper {
     return null;
   }
 
-  static String? def(String? value) {
+  static String? others(String? value) {
     if (value == null || value.isEmpty) {
       return 'This is required';
     }

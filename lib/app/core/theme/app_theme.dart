@@ -9,6 +9,7 @@ import 'color_scheme.dart';
 class AppTheme {
   static final lightTheme = ThemeData(
     fontFamily: Constants.fontFamily,
+    useMaterial3: true,
     colorScheme: AppColorScheme.lightColorScheme,
     scaffoldBackgroundColor: AppColorScheme.lightColorScheme.background,
     textTheme: AppTextTheme.textTheme,

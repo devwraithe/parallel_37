@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:parallel_37/src/core/exception.dart';
 import 'package:parallel_37/src/core/failure.dart';
 import 'package:parallel_37/src/data/data_sources/local_data_source.dart';
 import 'package:parallel_37/src/domain/entities/store.dart';
 import 'package:parallel_37/src/domain/respositories/store_repository.dart';
+
+import '../../../app/core/utilities/errors/exceptions.dart';
 
 class StoreRepositoryImpl implements StoreRepository {
   final LocalDataSource localDataSource;
