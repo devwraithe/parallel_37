@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:parallel_37/app/core/utilities/errors/failure.dart';
 
 import '../../../core/utilities/constants.dart';
@@ -49,6 +50,34 @@ class InventoryRepositoryImpl implements InventoryRepository {
       throw ConnectionException(Constants.timeout);
     } catch (e) {
       throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addItem(Map<String, dynamic> data) async {
+    try {
+      final categories = Constants.firestore.collection("categories");
+      QuerySnapshot categoryQuery =
+          await categories.where('category', isEqualTo: data['category']).get();
+
+      if (categoryQuery.docs.isNotEmpty) {
+        // Get the reference to the category document
+        DocumentReference categoryDocRef = categoryQuery.docs.first.reference;
+        CollectionReference items = categoryDocRef.collection("items");
+
+        await items.add({
+          'itemName': data['name'],
+        });
+      } else {
+        debugPrint("Category not found");
+      }
+
+      return const Right(null);
+    } catch (e) {
+      if (e is FirebaseException) {
+        return Left(Failure(e.message ?? Constants.unknownError));
+      }
+      throw ServerException(Constants.unknownError);
     }
   }
 }

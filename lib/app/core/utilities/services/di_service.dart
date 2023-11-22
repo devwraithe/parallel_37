@@ -21,6 +21,7 @@ void init() {
   // Inventory injectors
   addCategoryInjector();
   getCategoriesInjector();
+  addItemInjector();
 
   // base injectors
   authInjector();

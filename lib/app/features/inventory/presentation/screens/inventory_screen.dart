@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parallel_37/app/core/routes/routes.dart';
 import 'package:parallel_37/app/core/utilities/helpers/ui_helpers.dart';
 import 'package:parallel_37/app/features/inventory/presentation/cubits/add_category_cubit/add_category_cubit.dart';
 import 'package:parallel_37/app/features/inventory/presentation/cubits/add_category_cubit/add_category_state.dart';
@@ -55,7 +56,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (final category in state.result) Text(category)
+                        for (final category in state.result)
+                          GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              Routes.addItem,
+                              arguments: category,
+                            ),
+                            child: Text(category),
+                          )
                       ],
                     );
                   } else {

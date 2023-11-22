@@ -4,6 +4,8 @@ class Routes {
   static String signIn = "/sign_in";
   static String passwordReset = "/password_reset";
 
+  static String addItem = "/add-item";
+
   // vendor routes
   static String vendorHome = "/vendor_home";
   static String createStore = "/create_store";
